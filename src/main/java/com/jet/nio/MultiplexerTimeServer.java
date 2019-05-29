@@ -79,6 +79,7 @@ public class MultiplexerTimeServer implements Runnable {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+                System.exit(1);
             }
         }
 
@@ -143,6 +144,7 @@ public class MultiplexerTimeServer implements Runnable {
 
     private void doWriter(SocketChannel channel, String resp) throws IOException {
         if (StringUtils.isEmpty(resp)) {
+            channel.write(new ByteBuffer[]{});
             return;
         }
         byte[] bytes = resp.getBytes();
