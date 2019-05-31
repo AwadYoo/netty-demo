@@ -10,10 +10,13 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
+import io.netty.handler.timeout.IdleStateHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.config.ConfigurationSource;
 import org.apache.logging.log4j.core.config.Configurator;
+
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -27,8 +30,8 @@ public class MainService {
         try {
             ConfigurationSource source = new ConfigurationSource(FileUtil.getResourcesFileInputStream("log4j2.xml"));
             Configurator.initialize(null, source);
-            run(port);
             checkRunning();
+            run(port);
             logger.info("dig4服务端初始化完成！");
         } catch (Exception e) {
             e.printStackTrace();
@@ -47,6 +50,7 @@ public class MainService {
             b.childHandler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 protected void initChannel(SocketChannel ch) throws Exception {
+                    ch.pipeline().addLast(new IdleStateHandler(3, 1, 5, TimeUnit.SECONDS));
                     ch.pipeline().addLast("handler", new DigChannelHandler());
                 }
             });

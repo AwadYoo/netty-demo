@@ -1,11 +1,8 @@
 package com.jet.netty.echo;
 
 import io.netty.buffer.Unpooled;
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelHandlerInvoker;
-import io.netty.util.concurrent.EventExecutorGroup;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 import lombok.extern.log4j.Log4j2;
 
 /**
@@ -13,7 +10,7 @@ import lombok.extern.log4j.Log4j2;
  * @create 2019-05-28 15:28
  */
 @Log4j2
-public class EchoClientHandler extends ChannelHandlerAdapter {
+public class EchoClientHandler extends ChannelInboundHandlerAdapter {
 
     private int counter;
 

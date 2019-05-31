@@ -6,6 +6,9 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.handler.timeout.IdleState;
+import io.netty.handler.timeout.IdleStateEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,7 +18,7 @@ import java.time.LocalDateTime;
  * @author awad_yoo
  * @create 2019-05-29 14:15
  */
-public class DigChannelHandler extends ChannelHandlerAdapter {
+public class DigChannelHandler extends ChannelInboundHandlerAdapter {
 
     private static Logger log = LogManager.getLogger(DigChannelHandler.class);
 
@@ -39,6 +42,7 @@ public class DigChannelHandler extends ChannelHandlerAdapter {
 
     }
 
+
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         log.info("客户端连接成功，地址是：{}", ctx.channel().remoteAddress());
@@ -53,11 +57,23 @@ public class DigChannelHandler extends ChannelHandlerAdapter {
 
     @Override
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
-        ctx.fireUserEventTriggered(evt);
+        //if (evt instanceof IdleStateEvent) {
+        //    IdleStateEvent e = (IdleStateEvent) evt;
+        //    if (e.state() == IdleState.READER_IDLE) {
+        //        ctx.close();
+        //        log.error("READER_IDLE 读超时");
+        //    } else if (e.state() == IdleState.WRITER_IDLE) {
+        //        ByteBuf buff = ctx.alloc().buffer();
+        //        buff.writeBytes("userEventTriggered test".getBytes());
+        //        ctx.writeAndFlush(buff);
+        //        log.error("WRITER_IDLE 写超时");
+        //    }
+        //}
     }
 
     public static void main(String[] args) {
         String bytes = ByteTools.bytesToHex(new byte[]{01, 12, 32, 12});
         System.out.println(bytes);
     }
+
 }
