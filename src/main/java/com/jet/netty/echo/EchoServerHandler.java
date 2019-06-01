@@ -5,6 +5,7 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 import lombok.extern.log4j.Log4j2;
 
 /**
@@ -13,7 +14,7 @@ import lombok.extern.log4j.Log4j2;
  */
 @Log4j2
 @ChannelHandler.Sharable
-public class EchoServerHandler extends ChannelHandlerAdapter {
+public class EchoServerHandler extends ChannelInboundHandlerAdapter {
 
     int count = 0;
 
@@ -34,4 +35,6 @@ public class EchoServerHandler extends ChannelHandlerAdapter {
         log.error(cause.getMessage());
         ctx.close();
     }
+
+
 }

@@ -5,7 +5,7 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelHandlerInvoker;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.concurrent.EventExecutorGroup;
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
@@ -21,7 +21,7 @@ import java.util.Objects;
  */
 @Log4j2
 @Data
-public class TimeSeverHandler extends ChannelHandlerAdapter {
+public class TimeSeverHandler extends ChannelInboundHandlerAdapter {
 
     private int counter;
 
